@@ -1,5 +1,10 @@
 const grid = document.querySelector('.grid');
-let gridSize = 18;
+const resetBtn = document.querySelector('.reset');
+const applyGridSize = document.querySelector('.apply');
+let gridDisplay = document.querySelector('.grid-display');
+let gridInput = document.querySelector('input');
+
+let gridSize = 8;
 
 createGrid(gridSize);
 
@@ -30,9 +35,28 @@ function createGrid(gridSize){
     }
 }
 
+function reset() {
+    while (grid.firstChild) {
+      grid.removeChild(grid.lastChild);
+    }
+    createGrid(gridSize);
+}
+
 grid.addEventListener('mouseover', function (e) {
     // Add the "active" class to only divs with a "box" class
     if (e.target.matches('.box')) {
       e.target.classList.add('active');
     }
+});
+
+gridInput.addEventListener('input', function (e){
+    gridSize = e.target.value;
+    gridDisplay.textContent = `${gridSize}x${gridSize}`;
+});
+
+applyGridSize.addEventListener('click', function () {
+    reset();
   });
+  
+
+resetBtn.addEventListener('click', reset);
